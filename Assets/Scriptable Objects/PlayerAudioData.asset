@@ -1,0 +1,35 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2900150f5aa6d49d6bfdeef9898fcf8a, type: 3}
+  m_Name: PlayerAudioData
+  m_EditorClassIdentifier: 
+  Footsteps:
+  - Clip: {fileID: 8300000, guid: da634e615ac7849b6b7cca7b102d9315, type: 3}
+    DefaultVolume: 1
+    ShouldLoop: 0
+  - Clip: {fileID: 8300000, guid: 3bc9a128dd4d041bd8634b8bcf9679c1, type: 3}
+    DefaultVolume: 1
+    ShouldLoop: 0
+  - Clip: {fileID: 8300000, guid: fe85553d42d3a4d8cb76a99b2392749b, type: 3}
+    DefaultVolume: 1
+    ShouldLoop: 0
+  - Clip: {fileID: 8300000, guid: f3b590fde9f9f4149a286b7c10b50100, type: 3}
+    DefaultVolume: 1
+    ShouldLoop: 0
+  - Clip: {fileID: 8300000, guid: 0d27b4139fab1490caac82358ca0b1ff, type: 3}
+    DefaultVolume: 1
+    ShouldLoop: 0
+  - Clip: {fileID: 8300000, guid: 6cd65111593894bd1b8a1487c93b2aba, type: 3}
+    DefaultVolume: 1
+    ShouldLoop: 0
+  MaxFootstepPitchVariation: 0.1
+  MaxFootstepVolumeVariation: 0.1
