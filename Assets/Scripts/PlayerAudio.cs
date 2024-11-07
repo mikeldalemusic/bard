@@ -6,6 +6,7 @@ public class PlayerAudio : AudioController
 
     // Store last played clip index to avoid playing it twice in a row
     private int lastClipIndex = 0;
+    private float lastNotePlayedTime;
 
     void Awake() {
         // Instantiate audio sources
@@ -13,6 +14,19 @@ public class PlayerAudio : AudioController
         {
             InitializeSound(sound);
         }
+        InitializeSound(AudioData.NoteA);
+        InitializeSound(AudioData.NoteB);
+        InitializeSound(AudioData.NoteC);
+        InitializeSound(AudioData.NoteE);
+        InitializeSound(AudioData.NoteF);
+        // Initialize lastNotePlayedTime so that a note can be played immediately
+        lastNotePlayedTime = -AudioData.NoteCooldownTime;
+    }
+
+    // Returns true if noteCooldownTime time has passed since lastNotePlayedTime
+    private bool CanPlayNote()
+    {
+        return Time.time >= lastNotePlayedTime + AudioData.NoteCooldownTime;
     }
 
     public void PlayWalkingAudio(Vector2 movement)
@@ -42,6 +56,43 @@ public class PlayerAudio : AudioController
         AudioData.Footsteps[clipIndex].Play(pitch, volume);
         // Set lastClipIndex to the index just used
         lastClipIndex = clipIndex;
+    }
+
+    public void PlayNote(string noteName)
+    {
+        // Return early if player can't currently play a note
+        if (!CanPlayNote())
+        {
+            return;
+        }
+        // Determine which Sound to play
+        Sound sound;
+        switch (noteName)
+        {
+            case Actions.NoteA:
+                sound = AudioData.NoteA;
+                break;
+            case Actions.NoteB:
+                sound = AudioData.NoteB;
+                break;
+            case Actions.NoteC:
+                sound = AudioData.NoteC;
+                break;
+            case Actions.NoteE:
+                sound = AudioData.NoteE;
+                break;
+            case Actions.NoteF:
+                sound = AudioData.NoteF;
+                break;
+            default:
+                return;
+        }
+        // If a valid note name was provided, play the related Sound
+        if (sound != null)
+        {
+            sound.Play();
+            lastNotePlayedTime = Time.time;
+        }
     }
 
     // TODO: implement
