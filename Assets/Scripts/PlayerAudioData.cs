@@ -16,6 +16,12 @@ public class PlayerAudioData : ScriptableObject
     public Sound NoteC;
     public Sound NoteE;
     public Sound NoteF;
-    [Range (0f, 0.5f)]
-    public float NoteCooldownTime;
+    public Sound Melody1;
+    public Sound Melody2;
+    // Time between last note of Melody trigger and Melody being played
+    [Range (0f, 1f)]
+    public float TimeBeforeMelody;
+    // Time before player is moved from InstrumentMelody state to Default state
+    [Range (0f, 10f)]
+    public float MelodyCooldownTime;
 }

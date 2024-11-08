@@ -64,4 +64,15 @@ MonoBehaviour:
     DefaultPitch: 1
     DefaultVolume: 1
     ShouldLoop: 0
-  NoteCooldownTime: 0.1
+  Melody1:
+    Clip: {fileID: 8300000, guid: dca97a2d2ad454874b6274df9837dea3, type: 3}
+    DefaultPitch: 1
+    DefaultVolume: 1
+    ShouldLoop: 0
+  Melody2:
+    Clip: {fileID: 8300000, guid: 8182e29db9e0245d38f5858b24af3bf9, type: 3}
+    DefaultPitch: 1
+    DefaultVolume: 1
+    ShouldLoop: 0
+  TimeBeforeMelody: 0.5
+  MelodyCooldownTime: 3

@@ -6,9 +6,9 @@ public class PlayerAudio : AudioController
 
     // Store last played clip index to avoid playing it twice in a row
     private int lastClipIndex = 0;
-    private float lastNotePlayedTime;
 
     void Awake() {
+        // TODO: improve this
         // Instantiate audio sources
         foreach (Sound sound in AudioData.Footsteps)
         {
@@ -19,14 +19,8 @@ public class PlayerAudio : AudioController
         InitializeSound(AudioData.NoteC);
         InitializeSound(AudioData.NoteE);
         InitializeSound(AudioData.NoteF);
-        // Initialize lastNotePlayedTime so that a note can be played immediately
-        lastNotePlayedTime = -AudioData.NoteCooldownTime;
-    }
-
-    // Returns true if noteCooldownTime time has passed since lastNotePlayedTime
-    private bool CanPlayNote()
-    {
-        return Time.time >= lastNotePlayedTime + AudioData.NoteCooldownTime;
+        InitializeSound(AudioData.Melody1);
+        InitializeSound(AudioData.Melody2);
     }
 
     public void PlayWalkingAudio(Vector2 movement)
@@ -60,28 +54,23 @@ public class PlayerAudio : AudioController
 
     public void PlayNote(string noteName)
     {
-        // Return early if player can't currently play a note
-        if (!CanPlayNote())
-        {
-            return;
-        }
         // Determine which Sound to play
         Sound sound;
         switch (noteName)
         {
-            case Actions.NoteA:
+            case MelodyData.NoteA:
                 sound = AudioData.NoteA;
                 break;
-            case Actions.NoteB:
+            case MelodyData.NoteB:
                 sound = AudioData.NoteB;
                 break;
-            case Actions.NoteC:
+            case MelodyData.NoteC:
                 sound = AudioData.NoteC;
                 break;
-            case Actions.NoteE:
+            case MelodyData.NoteE:
                 sound = AudioData.NoteE;
                 break;
-            case Actions.NoteF:
+            case MelodyData.NoteF:
                 sound = AudioData.NoteF;
                 break;
             default:
@@ -91,7 +80,21 @@ public class PlayerAudio : AudioController
         if (sound != null)
         {
             sound.Play();
-            lastNotePlayedTime = Time.time;
+        }
+    }
+
+    public void PlayMelody(string melody)
+    {
+        switch (melody)
+        {
+            case MelodyData.Melody1:
+                AudioData.Melody1.Play();
+                break;
+            case MelodyData.Melody2:
+                AudioData.Melody2.Play();
+                break;
+            default:
+                break;
         }
     }
 

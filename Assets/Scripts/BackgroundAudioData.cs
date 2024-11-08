@@ -7,6 +7,9 @@ public class BackgroundAudioData : ScriptableObject
     // Volume to set background music when player is in "Instrument" state
     [Range (0f, 1f)]
     public float BackgroundMusicInstrumentVolume;
+    // Volume to set background music when player is playing a Melody
+    [Range (0f, 1f)]
+    public float BackgroundMusicInstrumentMelodyVolume;
     // Volume to set background music when game is paused
     [Range (0f, 1f)]
     public float BackgroundMusicPauseVolume;

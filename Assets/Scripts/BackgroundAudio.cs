@@ -22,6 +22,9 @@ public class BackgroundAudio : AudioController
             case PlayerState.Instrument:
                 AudioData.BackgroundMusic.SetVolume(AudioData.BackgroundMusicInstrumentVolume);
                 break;
+            case PlayerState.InstrumentMelody:
+                AudioData.BackgroundMusic.SetVolume(AudioData.BackgroundMusicInstrumentMelodyVolume);
+                break;
         }
     }
 

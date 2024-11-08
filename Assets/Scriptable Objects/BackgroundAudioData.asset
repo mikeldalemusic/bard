@@ -15,7 +15,8 @@ MonoBehaviour:
   BackgroundMusic:
     Clip: {fileID: 8300000, guid: 186d31e2cc6ef49fbae3def8df96cb5f, type: 3}
     DefaultPitch: 1
-    DefaultVolume: 0.8
+    DefaultVolume: 0.7
     ShouldLoop: 1
-  BackgroundMusicPauseVolume: 0.25
   BackgroundMusicInstrumentVolume: 0.4
+  BackgroundMusicInstrumentSongVolume: 0
+  BackgroundMusicPauseVolume: 0.4
