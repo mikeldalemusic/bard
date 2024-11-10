@@ -10,6 +10,7 @@ public enum PlayerState {
 }
 
 [RequireComponent(typeof(PlayerAnimation))]
+[RequireComponent(typeof(PlayerAttack))]
 [RequireComponent(typeof(PlayerAudio))]
 [RequireComponent(typeof(PlayerMovement))]
 [RequireComponent(typeof(PlayerAudioData))]
@@ -20,6 +21,7 @@ public class PlayerController : MonoBehaviour
     public PlayerAudioData AudioData;
 
     private PlayerAnimation playerAnimation;
+    private PlayerAttack playerAttack;
     private PlayerAudio playerAudio;
     private PlayerMovement playerMovement;
     private Vector2 movement;
@@ -37,6 +39,7 @@ public class PlayerController : MonoBehaviour
     void Awake()
     {
         playerAnimation = GetComponent<PlayerAnimation>();
+        playerAttack = GetComponent<PlayerAttack>();
         playerAudio = GetComponent<PlayerAudio>();
         playerMovement = GetComponent<PlayerMovement>();
     }
@@ -100,6 +103,11 @@ public class PlayerController : MonoBehaviour
             movement = PlayerInputManager.Movement;
             playerAnimation.SetAnimationParams(movement);
             playerAudio.PlayWalkingAudio(movement);
+
+            if (PlayerInputManager.WasAttackPressed)
+            {
+                playerAttack.Attack();
+            }
         }
         else if (CurrentState == PlayerState.Instrument)
         {

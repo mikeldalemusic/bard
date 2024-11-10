@@ -12,6 +12,7 @@ static class Actions
 {
     // Player actions
     public const string Move = "Move";
+    public const string Attack = "Attack";
     // Instrument actions
     public const string ToggleInstrument = "ToggleInstrument";
     public const string NoteA = "NoteA";
@@ -29,11 +30,13 @@ public class PlayerInputManager : MonoBehaviour
 
     // Public properties for reading captured input
     public static Vector2 Movement;
+    public static bool WasAttackPressed;
     public static bool WasToggleInstrumentPressed;
     public static string NotePressed;
 
     // Player actions
     private InputAction moveAction;
+    private InputAction attackAction;
     // Instrument actions
     private InputAction toggleInstrumentAction;
     private InputAction noteAAction;
@@ -47,6 +50,7 @@ public class PlayerInputManager : MonoBehaviour
         // Player actions
         InputActionMap playerActionMap = InputActionAsset.FindActionMap(ActionMaps.Player);
         moveAction = playerActionMap.FindAction(Actions.Move);
+        attackAction = playerActionMap.FindAction(Actions.Attack);
         // Instrument actions
         InputActionMap instrumentActionMap = InputActionAsset.FindActionMap(ActionMaps.Instrument);
         toggleInstrumentAction = instrumentActionMap.FindAction(Actions.ToggleInstrument);
@@ -112,6 +116,7 @@ public class PlayerInputManager : MonoBehaviour
         // Move action composite mode should be set to "digital" to prevent diagonal
         // movement magnitude from being less than 1
         Movement = moveAction.ReadValue<Vector2>();
+        WasAttackPressed = attackAction.WasPressedThisFrame();
         WasToggleInstrumentPressed = toggleInstrumentAction.WasPressedThisFrame();
         HandleNotePress();
     }
