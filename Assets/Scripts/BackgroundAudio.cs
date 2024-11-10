@@ -5,6 +5,14 @@ public class BackgroundAudio : AudioController
     void Awake() {
         // Instantiate audio source
         InitializeSound(AudioData.BackgroundMusic);
+        // Subscribe to custom event
+        CustomEvents.OnPlayerStateChange.AddListener(OnPlayerStateChange);
+    }
+
+    void OnDestroy()
+    {
+        // Remove listener on destroy to prevent memory leaks
+        CustomEvents.OnPlayerStateChange.RemoveListener(OnPlayerStateChange);
     }
 
     public void PlayBackgroundMusic()

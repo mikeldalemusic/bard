@@ -16,7 +16,16 @@ public enum PlayerState {
 [RequireComponent(typeof(PlayerAudioData))]
 public class PlayerController : MonoBehaviour
 {
-    public static PlayerState CurrentState = PlayerState.Default;
+    // Trigger custom event when CurrentState public variable is modified
+    private static PlayerState _currentState = PlayerState.Default;
+    public static PlayerState CurrentState
+    {
+        get { return _currentState; }
+        set {
+            _currentState = value;
+            CustomEvents.OnPlayerStateChange?.Invoke(value);
+        }
+    }
 
     public PlayerAudioData AudioData;
 

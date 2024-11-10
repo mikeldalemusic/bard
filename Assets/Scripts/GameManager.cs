@@ -4,7 +4,6 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
     private BackgroundAudio backgroundAudio;
-    private PlayerState currentPlayerState;
 
     void Awake()
     {
@@ -21,19 +20,8 @@ public class GameManager : MonoBehaviour
     }
 
     void Start() {
-        currentPlayerState = PlayerController.CurrentState;
         // Start background music
         backgroundAudio.PlayBackgroundMusic();
-    }
-
-    void Update()
-    {
-        // TODO: can use custom event for player state change instead of checking every frame
-        if (currentPlayerState != PlayerController.CurrentState)
-        {
-            currentPlayerState = PlayerController.CurrentState;
-            backgroundAudio.OnPlayerStateChange(currentPlayerState);
-        }
     }
 
     void OnCombatEncounterCleared(GameObject combatEncounter)
