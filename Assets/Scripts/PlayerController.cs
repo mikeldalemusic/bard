@@ -113,9 +113,10 @@ public class PlayerController : MonoBehaviour
             playerAnimation.SetAnimationParams(movement);
             playerAudio.PlayWalkingAudio(movement);
 
-            if (PlayerInputManager.WasAttackPressed)
+            if (PlayerInputManager.WasAttackPressed && PlayerAttack.CanAttack)
             {
                 playerAttack.Attack();
+                playerAudio.PlayAttackChord();
             }
         }
         else if (CurrentState == PlayerState.Instrument)

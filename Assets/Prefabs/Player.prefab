@@ -157,7 +157,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   AudioData: {fileID: 11400000, guid: 2e2e86869796548869e37110561c8381, type: 2}
-  Weapon: {fileID: 0}
 --- !u!114 &2947611010104209421
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -211,6 +210,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Weapon: {fileID: 2299894830920113254}
+  attackCoolDownTime: 0.5
 --- !u!1001 &8289251863113969390
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -266,32 +266,13 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 7846265125238944392, guid: ffca741fb1cda45e2b76864e2eea30d5, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 9208865678237135540}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ffca741fb1cda45e2b76864e2eea30d5, type: 3}
 --- !u!1 &2299894830920113254 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 7846265125238944392, guid: ffca741fb1cda45e2b76864e2eea30d5, type: 3}
   m_PrefabInstance: {fileID: 8289251863113969390}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &9208865678237135540
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2299894830920113254}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 72c180312e8924e3a9a7759e1e5c7b97, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  AttackRange: 0
-  enemyLayer:
-    serializedVersion: 2
-    m_Bits: 64
 --- !u!4 &2863673465185184777 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6103672164386603751, guid: ffca741fb1cda45e2b76864e2eea30d5, type: 3}

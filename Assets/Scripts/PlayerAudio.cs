@@ -5,12 +5,17 @@ public class PlayerAudio : AudioController
     public PlayerAudioData AudioData;
 
     // Store last played clip index to avoid playing it twice in a row
-    private int lastClipIndex = 0;
+    private int lastWalkingClipIndex = 0;
 
+    // TODO: refactor to use less audio sources and just change clips
     void Awake() {
         // TODO: improve this
         // Instantiate audio sources
         foreach (Sound sound in AudioData.Footsteps)
+        {
+            InitializeSound(sound);
+        }
+        foreach (Sound sound in AudioData.AttackChords)
         {
             InitializeSound(sound);
         }
@@ -29,15 +34,15 @@ public class PlayerAudio : AudioController
         // or if a walking clip is currently playing
         if(
             movement.sqrMagnitude == 0 ||
-            AudioData.Footsteps[lastClipIndex].IsPlaying
+            AudioData.Footsteps[lastWalkingClipIndex].IsPlaying
         )
         {
             return;
         }
 
         // Prevent playing the same clip twice in a row
-        int clipIndex = lastClipIndex;
-        while (clipIndex == lastClipIndex)
+        int clipIndex = lastWalkingClipIndex;
+        while (clipIndex == lastWalkingClipIndex)
         {
             clipIndex = Random.Range(0, AudioData.Footsteps.Length);
         }
@@ -48,8 +53,8 @@ public class PlayerAudio : AudioController
         float volume = Random.Range(sound.DefaultVolume - AudioData.MaxFootstepVolumeVariation, sound.DefaultVolume);
         // Play the sound with new pitch and volume
         AudioData.Footsteps[clipIndex].Play(pitch, volume);
-        // Set lastClipIndex to the index just used
-        lastClipIndex = clipIndex;
+        // Set lastWalkingClipIndex to the index just used
+        lastWalkingClipIndex = clipIndex;
     }
 
     public void PlayNote(string noteName)
@@ -96,6 +101,13 @@ public class PlayerAudio : AudioController
             default:
                 break;
         }
+    }
+
+    public void PlayAttackChord()
+    {
+        // Play a random attack chord clip
+        int clipIndex = Random.Range(0, AudioData.AttackChords.Length);
+        AudioData.AttackChords[clipIndex].Play();
     }
 
     // TODO: implement
