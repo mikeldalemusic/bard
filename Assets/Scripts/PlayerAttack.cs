@@ -1,8 +1,12 @@
+using System.Collections;
 using UnityEngine;
 
 public class PlayerAttack : MonoBehaviour
 {
+    public static bool CanAttack = true;
     public GameObject Weapon;
+    [Range (0f, 1f)]
+    public float attackCoolDownTime;
 
     private WeaponController weaponController;
 
@@ -11,10 +15,17 @@ public class PlayerAttack : MonoBehaviour
         weaponController = Weapon.GetComponent<WeaponController>();
     }
 
+    private IEnumerator AttackCooldown()
+    {
+        CanAttack = false;
+        yield return new WaitForSeconds(attackCoolDownTime);
+        CanAttack = true;
+    }
+
     public void Attack()
     {
-        // TODO: add cooldown
         // TODO: move weapon position
         weaponController.Attack();
+        StartCoroutine(AttackCooldown());
     }
 }

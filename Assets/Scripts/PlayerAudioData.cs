@@ -24,4 +24,7 @@ public class PlayerAudioData : ScriptableObject
     // Time before player is moved from InstrumentMelody state to Default state
     [Range (0f, 10f)]
     public float MelodyCooldownTime;
+
+    [Header("Combat")]
+    public Sound[] AttackChords;
 }

@@ -76,3 +76,16 @@ MonoBehaviour:
     ShouldLoop: 0
   TimeBeforeMelody: 0.5
   MelodyCooldownTime: 3
+  AttackChords:
+  - Clip: {fileID: 8300000, guid: 5589bd3279e314227ba99d092fa27eb7, type: 3}
+    DefaultPitch: 1
+    DefaultVolume: 1
+    ShouldLoop: 0
+  - Clip: {fileID: 8300000, guid: 63e8383e6ff814e29b6be87163714482, type: 3}
+    DefaultPitch: 1
+    DefaultVolume: 1
+    ShouldLoop: 0
+  - Clip: {fileID: 8300000, guid: 92a86b677046a43baa5f3824480d92e8, type: 3}
+    DefaultPitch: 1
+    DefaultVolume: 1
+    ShouldLoop: 0
