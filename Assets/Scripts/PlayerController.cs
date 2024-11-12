@@ -99,7 +99,11 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
-        // TODO: handle pause state
+        // Handle pause state
+        if (PlayerInputManager.isPaused)
+        {
+            return;
+        }
         // Check if instrument was toggled
         if (PlayerInputManager.WasToggleInstrumentPressed)
         {
