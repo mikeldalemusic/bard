@@ -10,16 +10,27 @@ public enum PlayerState {
 }
 
 [RequireComponent(typeof(PlayerAnimation))]
+[RequireComponent(typeof(PlayerAttack))]
 [RequireComponent(typeof(PlayerAudio))]
 [RequireComponent(typeof(PlayerMovement))]
 [RequireComponent(typeof(PlayerAudioData))]
 public class PlayerController : MonoBehaviour
 {
-    public static PlayerState CurrentState = PlayerState.Default;
+    // Trigger custom event when CurrentState public variable is modified
+    private static PlayerState _currentState = PlayerState.Default;
+    public static PlayerState CurrentState
+    {
+        get { return _currentState; }
+        set {
+            _currentState = value;
+            CustomEvents.OnPlayerStateChange?.Invoke(value);
+        }
+    }
 
     public PlayerAudioData AudioData;
 
     private PlayerAnimation playerAnimation;
+    private PlayerAttack playerAttack;
     private PlayerAudio playerAudio;
     private PlayerMovement playerMovement;
     private Vector2 movement;
@@ -37,6 +48,7 @@ public class PlayerController : MonoBehaviour
     void Awake()
     {
         playerAnimation = GetComponent<PlayerAnimation>();
+        playerAttack = GetComponent<PlayerAttack>();
         playerAudio = GetComponent<PlayerAudio>();
         playerMovement = GetComponent<PlayerMovement>();
     }
@@ -104,6 +116,12 @@ public class PlayerController : MonoBehaviour
             movement = PlayerInputManager.Movement;
             playerAnimation.SetAnimationParams(movement);
             playerAudio.PlayWalkingAudio(movement);
+
+            if (PlayerInputManager.WasAttackPressed && PlayerAttack.CanAttack)
+            {
+                playerAttack.Attack();
+                playerAudio.PlayAttackChord();
+            }
         }
         else if (CurrentState == PlayerState.Instrument)
         {

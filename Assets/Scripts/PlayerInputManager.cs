@@ -16,6 +16,7 @@ static class Actions
 {
     // Player actions
     public const string Move = "Move";
+    public const string Attack = "Attack";
     public const string OpenMenu = "OpenMenu";
     // Instrument actions
     public const string ToggleInstrument = "ToggleInstrument";
@@ -42,6 +43,7 @@ public class PlayerInputManager : MonoBehaviour
 
     // Public properties for reading captured input
     public static Vector2 Movement;
+    public static bool WasAttackPressed;
     public bool MenuOpened { get; private set; }
     public bool MenuClosed { get; private set; }
     public static bool WasToggleInstrumentPressed;
@@ -52,6 +54,7 @@ public class PlayerInputManager : MonoBehaviour
 
     // Player actions
     private InputAction moveAction;
+    private InputAction attackAction;
     private InputAction OpenMenuAction;
     // Instrument actions
     private InputAction toggleInstrumentAction;
@@ -70,6 +73,7 @@ public class PlayerInputManager : MonoBehaviour
         // Player actions
         InputActionMap playerActionMap = InputActionAsset.FindActionMap(ActionMaps.Player);
         moveAction = playerActionMap.FindAction(Actions.Move);
+        attackAction = playerActionMap.FindAction(Actions.Attack);
         OpenMenuAction = playerActionMap.FindAction(Actions.OpenMenu);
         // Instrument actions
         InputActionMap instrumentActionMap = InputActionAsset.FindActionMap(ActionMaps.Instrument);
@@ -221,6 +225,7 @@ public class PlayerInputManager : MonoBehaviour
         // Move action composite mode should be set to "digital" to prevent diagonal
         // movement magnitude from being less than 1
         Movement = moveAction.ReadValue<Vector2>();
+        WasAttackPressed = attackAction.WasPressedThisFrame();
         MenuOpened = OpenMenuAction.WasPressedThisFrame();
         MenuClosed = CloseMenuAction.WasPressedThisFrame();
         if(MenuOpened || MenuClosed)

@@ -4,25 +4,28 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
     private BackgroundAudio backgroundAudio;
-    private PlayerState currentPlayerState;
 
     void Awake()
     {
         backgroundAudio = GetComponent<BackgroundAudio>();
+
+        // Subscribe to custom event
+        CustomEvents.OnCombatEncounterCleared.AddListener(OnCombatEncounterCleared);
+    }
+
+    void OnDestroy()
+    {
+        // Remove listener on destroy to prevent memory leaks
+        CustomEvents.OnCombatEncounterCleared.RemoveListener(OnCombatEncounterCleared);
     }
 
     void Start() {
-        currentPlayerState = PlayerController.CurrentState;
         // Start background music
         backgroundAudio.PlayBackgroundMusic();
     }
 
-    void Update()
+    void OnCombatEncounterCleared(GameObject combatEncounter)
     {
-        if (currentPlayerState != PlayerController.CurrentState)
-        {
-            currentPlayerState = PlayerController.CurrentState;
-            backgroundAudio.OnPlayerStateChange(currentPlayerState);
-        }
+        Debug.Log("Combat cleared!");
     }
 }
