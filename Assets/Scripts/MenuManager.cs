@@ -9,6 +9,8 @@ public class MenuManager : MonoBehaviour
 {
     public static MenuManager Instance;
     public GameObject PauseMenuUI;
+    public ButtonSelectionHandler[] buttons { get; private set; }
+    private Dictionary<GameObject, (Vector3 _startPos, Vector3 _startScale)> buttonStates;
     // public bool isPaused {get; private set;}
      void Awake()
     {
@@ -25,33 +27,92 @@ public class MenuManager : MonoBehaviour
     }
     private void Start()
     {
+        buttonStates = new Dictionary<GameObject, (Vector3, Vector3)>();
 
+        // Find all ButtonSelectionHandler scripts, including inactive ones
+        buttons = FindObjectsByType<ButtonSelectionHandler>(FindObjectsInactive.Include, FindObjectsSortMode.None);
+
+        foreach (var button in buttons)
+        {
+            // var buttonGameObject = button.gameObject;
+            buttonStates[button.gameObject] = (button.gameObject.transform.position, button.gameObject.transform.localScale);
+        }
     }
-
-    private void Update()
+    public void TriggerButtonAnimation(GameObject button, bool startingAnimation)
     {
-        // if (PlayerInputManager.Instance.MenuOpened)
-        // {
-        //     Debug.Log("pause called");
-        // }
-        //     if (isPaused)
-        //     {
-        //         Unpause();
-        //     }
-        //     else 
-        //     {
-        //         Pause();
-        //     }
+        if (buttonStates.ContainsKey(button))
+        {
+            StartCoroutine(AnimateButton(button, startingAnimation));
+        }
+        else
+        {
+            Debug.LogError($"Button {button.name} not found in buttonStates dictionary!");
+        }
+        // StartCoroutine(AnimateButton(button, startingAnimation));
     }
 
-     public void ShowPauseMenu()
+    private IEnumerator AnimateButton(GameObject button, bool startingAnimation)
     {
-        PauseMenuUI.SetActive(true);
+        if (button == null) yield break;
+
+        float moveTime = 0.1f;
+        float elapsedTime = 0f;
+        float _verticalMoveAmount = 1f;
+        float _scaleAmount = 1.1f;
+        
+        var (initialPos, initalScale) = buttonStates[button];
+
+        // Define animation targets
+        Vector3 _endPos; 
+        Vector3 _endscale;
+
+
+        while (elapsedTime < moveTime)
+        {
+            elapsedTime += Time.deltaTime;
+            float t = elapsedTime / moveTime;
+             if(startingAnimation)
+            {
+                _endPos = initialPos + new Vector3(0f, _verticalMoveAmount, 0f);
+                _endscale = initalScale * _scaleAmount;
+            }
+            else
+            {
+                _endPos = initialPos;
+                _endscale = initalScale;
+            }
+
+            // Interpolate position and scale
+            // button.transform.position = Vector3.Lerp(initialPos, _endPos, t);
+            // button.transform.localScale = Vector3.Lerp(initalScale, _endscale, t);
+            Vector3 LerpedPos = Vector3.Lerp(button.transform.position, _endPos, t);
+            Vector3 LerpedScale = Vector3.Lerp(button.transform.localScale, _endscale, t);
+
+            button.transform.position = LerpedPos;
+            button.transform.localScale = LerpedScale;
+
+            yield return null;
+        }
+
     }
 
-    public void HidePauseMenu()
-    {
-        PauseMenuUI.SetActive(false);
-    }
+
+
+    // private void Update()
+    // {
+    //     // if (PlayerInputManager.Instance.MenuOpened)
+    //     // {
+    //     //     Debug.Log("pause called");
+    //     // }
+    //     //     if (isPaused)
+    //     //     {
+    //     //         Unpause();
+    //     //     }
+    //     //     else 
+    //     //     {
+    //     //         Pause();
+    //     //     }
+    // }
+
 
 }

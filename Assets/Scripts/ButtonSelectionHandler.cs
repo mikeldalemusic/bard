@@ -26,9 +26,11 @@ public class ButtonSelectionHandler : MonoBehaviour, IPointerEnterHandler, IPoin
         Vector3 _endScale;
 
         float elapsedTime = 0f;
-        while(elapsedTime < _moveTime)
+        while (elapsedTime < _moveTime)
         {
             elapsedTime += Time.deltaTime;
+            float t = elapsedTime / _moveTime;
+
             if(startingAnimation)
             {
                 _endPos = _startPos + new Vector3(0f, _verticalMoveAmount, 0f);
@@ -41,15 +43,15 @@ public class ButtonSelectionHandler : MonoBehaviour, IPointerEnterHandler, IPoin
             }
 
             // actually calculate the lerped amounts
-            Vector3 lerpedPos =  Vector3.Lerp(transform.position, _endPos, (elapsedTime / _moveTime));
-            Vector3 lerpedScale = Vector3.Lerp(transform.localScale, _endScale, (elapsedTime / _moveTime));
+            transform.position = Vector3.Lerp(transform.position, _endPos, t);
+            transform.localScale = Vector3.Lerp(transform.localScale, _endScale, t);
 
-            // apply changes to position and scale
-            transform.position = lerpedPos;
-            transform.localScale = lerpedScale;
+            transform.position = _endPos;
+            transform.localScale = _endScale;
 
             yield return null;
         }
+
     }
 
     public void OnPointerEnter(PointerEventData eventData)
@@ -61,7 +63,7 @@ public class ButtonSelectionHandler : MonoBehaviour, IPointerEnterHandler, IPoin
     public void OnPointerExit(PointerEventData eventData)
     {
         // deselect the button
-        if (eventData.selectedObject = gameObject)
+        if (eventData.selectedObject == gameObject)
         {
             eventData.selectedObject = null;
         }
@@ -69,11 +71,17 @@ public class ButtonSelectionHandler : MonoBehaviour, IPointerEnterHandler, IPoin
 
     public void OnSelect(BaseEventData eventData)
     {
-        StartCoroutine(MoveButton(true));
+         if (MenuManager.Instance != null)
+        {
+            MenuManager.Instance.TriggerButtonAnimation(gameObject, true); // Starting animation
+        }
     }
 
     public void OnDeselect(BaseEventData eventData)
     {
-        StartCoroutine(MoveButton(false));
+         if (MenuManager.Instance != null)
+        {
+            MenuManager.Instance.TriggerButtonAnimation(gameObject, false); // Starting animation
+        }
     }
 }
