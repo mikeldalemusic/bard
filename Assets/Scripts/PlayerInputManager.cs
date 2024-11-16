@@ -158,7 +158,7 @@ public class PlayerInputManager : MonoBehaviour
         }
     }
     
-    void HandleMenuOpen()
+    public void HandleMenuOpen()
     {
         // TODO: handle opening/closing other menus
         if(isPaused)
@@ -199,6 +199,11 @@ public class PlayerInputManager : MonoBehaviour
         {
             GameObject PauseMenu = MenuManager.Instance.PauseMenuUI;
             PauseMenu.SetActive(true);
+            foreach (var button in MenuManager.Instance.buttons)
+            {
+                // Debug.Log($"Found button: {button.gameObject.name}");
+                button.gameObject.SetActive(true);
+            }
         }
         isPaused = true;
         Time.timeScale = 0f;
