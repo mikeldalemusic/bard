@@ -31,7 +31,10 @@ public class ButtonSelectionHandler : MonoBehaviour, IPointerEnterHandler, IPoin
     {
          if (MenuManager.Instance != null)
         {
-            MenuManager.Instance.TriggerButtonAnimation(gameObject, true); // Starting animation
+            if (gameObject.activeSelf)
+            {
+                MenuManager.Instance.TriggerButtonAnimation(gameObject, true); // Starting animation
+            }
         }
     }
 
@@ -39,7 +42,10 @@ public class ButtonSelectionHandler : MonoBehaviour, IPointerEnterHandler, IPoin
     {
          if (MenuManager.Instance != null)
         {
-            MenuManager.Instance.TriggerButtonAnimation(gameObject, false); // Ending animation
+            if (gameObject.activeSelf)
+            {
+                MenuManager.Instance.TriggerButtonAnimation(gameObject, false); // Ending animation
+            }
         }
     }
 }

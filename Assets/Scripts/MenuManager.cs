@@ -57,7 +57,7 @@ public class MenuManager : MonoBehaviour
 
         float moveTime = 0.1f;
         float elapsedTime = 0f;
-        float _verticalMoveAmount = 1f;
+        float _verticalMoveAmount = 10f;
         float _scaleAmount = 1.1f;
         
         var (initialPos, initalScale) = buttonStates[button];
@@ -69,7 +69,7 @@ public class MenuManager : MonoBehaviour
 
         while (elapsedTime < moveTime)
         {
-            elapsedTime += Time.deltaTime;
+            elapsedTime += Time.unscaledDeltaTime;
             float t = elapsedTime / moveTime;
              if(startingAnimation)
             {
@@ -95,24 +95,5 @@ public class MenuManager : MonoBehaviour
         }
 
     }
-
-
-
-    // private void Update()
-    // {
-    //     // if (PlayerInputManager.Instance.MenuOpened)
-    //     // {
-    //     //     Debug.Log("pause called");
-    //     // }
-    //     //     if (isPaused)
-    //     //     {
-    //     //         Unpause();
-    //     //     }
-    //     //     else 
-    //     //     {
-    //     //         Pause();
-    //     //     }
-    // }
-
 
 }
