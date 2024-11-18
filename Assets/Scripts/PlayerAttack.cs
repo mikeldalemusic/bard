@@ -28,4 +28,10 @@ public class PlayerAttack : MonoBehaviour
         weaponController.Attack();
         StartCoroutine(AttackCooldown());
     }
+
+    public void TakeDamage()
+    {
+        // TODO: implement "stunned" state
+        Debug.Log("Ouch!");
+    }
 }
