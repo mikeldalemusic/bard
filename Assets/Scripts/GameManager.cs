@@ -21,7 +21,7 @@ public class GameManager : MonoBehaviour
 
     void Start() {
         // Start background music
-        // backgroundAudio.PlayBackgroundMusic();
+        backgroundAudio.PlayBackgroundMusic();
     }
 
     void OnCombatEncounterCleared(GameObject combatEncounter)
