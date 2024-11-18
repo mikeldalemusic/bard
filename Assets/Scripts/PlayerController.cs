@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -7,6 +8,13 @@ public enum PlayerState {
     Dialogue,
     Instrument,
     InstrumentMelody,
+}
+
+public enum FacingDirection {
+    Up,
+    Down,
+    Left,
+    Right,
 }
 
 [RequireComponent(typeof(PlayerAnimation))]
@@ -26,7 +34,7 @@ public class PlayerController : MonoBehaviour
             CustomEvents.OnPlayerStateChange?.Invoke(value);
         }
     }
-
+    public static FacingDirection FacingDirection = FacingDirection.Down;
     public PlayerAudioData AudioData;
 
     private PlayerAnimation playerAnimation;
@@ -102,6 +110,20 @@ public class PlayerController : MonoBehaviour
         playerAttack.TakeDamage();
     }
 
+    private FacingDirection determineFacingDirection(Vector2 movement)
+    {
+        // If moving diagonal, use horizontal direction
+        bool isMovingHorizontal = Math.Abs(movement.x) > 0;
+        if (isMovingHorizontal)
+        {
+            return movement.x > 0 ? FacingDirection.Right : FacingDirection.Left;
+        }
+        else
+        {
+            return movement.y > 0 ? FacingDirection.Up : FacingDirection.Down;
+        }
+    }
+
     void Update()
     {
         // Handle pause state
@@ -119,6 +141,11 @@ public class PlayerController : MonoBehaviour
         if (CurrentState == PlayerState.Default)
         {
             movement = PlayerInputManager.Movement;
+            // If moving, set FacingDirection
+            if (movement != Vector2.zero)
+            {
+                FacingDirection = determineFacingDirection(movement);
+            }
             playerAnimation.SetAnimationParams(movement);
             playerAudio.PlayWalkingAudio(movement);
 
