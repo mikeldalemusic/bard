@@ -97,6 +97,11 @@ public class PlayerController : MonoBehaviour
         CurrentState = PlayerState.Default;
     }
 
+    public void TakeDamage()
+    {
+        playerAttack.TakeDamage();
+    }
+
     void Update()
     {
         // Handle pause state
