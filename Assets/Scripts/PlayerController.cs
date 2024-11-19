@@ -35,7 +35,9 @@ public class PlayerController : MonoBehaviour
         }
     }
     public static FacingDirection FacingDirection = FacingDirection.Down;
+    // Set in editor
     public PlayerAudioData AudioData;
+    public LayerMask DialogueLayer;
 
     private PlayerAnimation playerAnimation;
     private PlayerAttack playerAttack;
@@ -59,6 +61,20 @@ public class PlayerController : MonoBehaviour
         playerAttack = GetComponent<PlayerAttack>();
         playerAudio = GetComponent<PlayerAudio>();
         playerMovement = GetComponent<PlayerMovement>();
+        // Subscribe to custom event
+        CustomEvents.OnDialogueEnd.AddListener(OnDialogueEnd);
+    }
+
+    void OnDestroy()
+    {
+        // Remove listener on destroy to prevent memory leaks
+        CustomEvents.OnDialogueEnd.RemoveListener(OnDialogueEnd);
+    }
+
+    private void OnDialogueEnd(Dialogue dialogue)
+    {
+        CurrentState = PlayerState.Default;
+        Debug.Log("dialogue completed");
     }
 
     private void ToggleInstrument()
@@ -124,6 +140,14 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    private Dialogue checkForDialogueCollision()
+    {
+        // TODO: @Andrew - check for collision with DialogueLayer
+        // If collision found, get the game object's Dialogue script with `GetComponent<Dialogue>()`
+        // (currently set to `FindFirstObjectByType<Dialogue>()` for testing)
+        return FindFirstObjectByType<Dialogue>();
+    }
+
     void Update()
     {
         // Handle pause state
@@ -140,6 +164,18 @@ public class PlayerController : MonoBehaviour
         // Perform actions depending on player state
         if (CurrentState == PlayerState.Default)
         {
+            if (PlayerInputManager.WasDialgouePressed)
+            {
+                // Check for collision with DialogueLayer
+                Dialogue dialogue = checkForDialogueCollision();
+                Debug.Log(dialogue);
+                if (dialogue != null)
+                {
+                    CurrentState = PlayerState.Dialogue;
+                    CustomEvents.OnDialogueStart?.Invoke(dialogue);
+                }
+            }
+
             movement = PlayerInputManager.Movement;
             // If moving, set FacingDirection
             if (movement != Vector2.zero)
@@ -172,6 +208,13 @@ public class PlayerController : MonoBehaviour
                     // Start coroutine to change state, play song, and then return to default state
                     StartCoroutine(PlayMelodyAfterDelay(melodyToPlay));
                 }
+            }
+        }
+        else if (CurrentState == PlayerState.Dialogue)
+        {
+            if (PlayerInputManager.WasDialgouePressed)
+            {
+                DialogueManager.AdvanceCurrentDialogue();
             }
         }
     }

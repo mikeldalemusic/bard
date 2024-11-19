@@ -18,6 +18,7 @@ static class Actions
     public const string Move = "Move";
     public const string Attack = "Attack";
     public const string OpenMenu = "OpenMenu";
+    public const string Dialogue = "Dialogue";
     // Instrument actions
     public const string ToggleInstrument = "ToggleInstrument";
     public const string NoteA = "NoteA";
@@ -48,6 +49,7 @@ public class PlayerInputManager : MonoBehaviour
     public bool MenuClosed { get; private set; }
     public static bool WasToggleInstrumentPressed;
     public static string NotePressed;
+    public static bool WasDialgouePressed;
 
     // Input Action Map
     private InputActionMap currentActionMap;
@@ -56,6 +58,7 @@ public class PlayerInputManager : MonoBehaviour
     private InputAction moveAction;
     private InputAction attackAction;
     private InputAction OpenMenuAction;
+    private InputAction dialogueAction;
     // Instrument actions
     private InputAction toggleInstrumentAction;
     private InputAction noteAAction;
@@ -75,6 +78,7 @@ public class PlayerInputManager : MonoBehaviour
         moveAction = playerActionMap.FindAction(Actions.Move);
         attackAction = playerActionMap.FindAction(Actions.Attack);
         OpenMenuAction = playerActionMap.FindAction(Actions.OpenMenu);
+        dialogueAction = playerActionMap.FindAction(Actions.Dialogue);
         // Instrument actions
         InputActionMap instrumentActionMap = InputActionAsset.FindActionMap(ActionMaps.Instrument);
         toggleInstrumentAction = instrumentActionMap.FindAction(Actions.ToggleInstrument);
@@ -97,7 +101,7 @@ public class PlayerInputManager : MonoBehaviour
         {
             Destroy(gameObject);  // Destroy duplicate instances
         }
-        
+
     }
 
     private void OnEnable()
@@ -157,7 +161,7 @@ public class PlayerInputManager : MonoBehaviour
             NotePressed = null;
         }
     }
-    
+
     public void HandleMenuOpen()
     {
         // TODO: handle opening/closing other menus
@@ -239,6 +243,7 @@ public class PlayerInputManager : MonoBehaviour
         }
         WasToggleInstrumentPressed = toggleInstrumentAction.WasPressedThisFrame();
         HandleNotePress();
+        WasDialgouePressed = dialogueAction.WasPressedThisFrame();
     }
 }
 
