@@ -774,6 +774,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
+    - target: {fileID: 4733736047738235037, guid: e3c3a71caf7954eacb125989ba6b3a1d, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 1468882759, guid: da720776ae198405396d5d04f8e4b3d6, type: 3}
+    - target: {fileID: 4733736047738235037, guid: e3c3a71caf7954eacb125989ba6b3a1d, type: 3}
+      propertyPath: m_WasSpriteAssigned
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5553036053896267798, guid: e3c3a71caf7954eacb125989ba6b3a1d, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -1151,9 +1159,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ff23dc895f071634dbf42b67126fa771, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _verticalMoveAmount: 1
-  _moveTime: 0.1
-  _scaleAmount: 1.1
 --- !u!114 &1125990605
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1301,9 +1306,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ff23dc895f071634dbf42b67126fa771, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _verticalMoveAmount: 1
-  _moveTime: 0.1
-  _scaleAmount: 1.1
 --- !u!1 &1437425133
 GameObject:
   m_ObjectHideFlags: 0
@@ -1439,9 +1441,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ff23dc895f071634dbf42b67126fa771, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _verticalMoveAmount: 1
-  _moveTime: 0.1
-  _scaleAmount: 1.1
 --- !u!114 &1437425139
 MonoBehaviour:
   m_ObjectHideFlags: 0
