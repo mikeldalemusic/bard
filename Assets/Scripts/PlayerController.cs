@@ -142,11 +142,84 @@ public class PlayerController : MonoBehaviour
 
     private Dialogue checkForDialogueCollision()
     {
-        // TODO: @Andrew - check for collision with DialogueLayer
-        // If collision found, get the game object's Dialogue script with `GetComponent<Dialogue>()`
-        // (currently set to `FindFirstObjectByType<Dialogue>()` for testing)
-        return FindFirstObjectByType<Dialogue>();
+        Vector3 interactPos = transform.position; // Player's center position
+
+        // Define the size of the rectangle (adjust dynamically based on FacingDirection)
+        Vector2 interactionZoneSize;
+
+        switch (FacingDirection)
+        {
+            case FacingDirection.Up:
+            case FacingDirection.Down:
+                interactionZoneSize = new Vector2(0.5f, 1f); // Narrow width, taller height
+                break;
+            case FacingDirection.Left:
+            case FacingDirection.Right:
+                interactionZoneSize = new Vector2(1f, 0.5f); // Wider width, shorter height
+                break;
+            default:
+                interactionZoneSize = new Vector2(0.5f, 0.5f); // Default size (failsafe)
+                break;
+        }
+
+        // Offset the interaction rectangle based on FacingDirection
+        switch (FacingDirection)
+        {
+            case FacingDirection.Up:
+                interactPos += Vector3.up * interactionOffset;
+                break;
+            case FacingDirection.Down:
+                interactPos += Vector3.down * interactionOffset;
+                break;
+            case FacingDirection.Left:
+                interactPos += Vector3.left * interactionOffset;
+                break;
+            case FacingDirection.Right:
+                interactPos += Vector3.right * interactionOffset;
+                break;
+        }
+
+        // DEBUG: Make interaction zone visible in Scene view via red rectangle
+        DebugDrawRectangle(interactPos, interactionZoneSize, Color.red);
+
+        //Check for interactable objects in the interaction zone
+        Collider2D hit = Physics2D.OverlapBox(interactPos, interactionZoneSize, 0, DialogueLayer);
+        if (hit != null)
+        {
+            SignController signController = hit.GetComponent<SignController>();
+            if (signController != null)
+            {
+                Debug.Log($"Found SignController on object: {hit.gameObject.name}");
+                return signController.dialogue; // Return the assigned Dialogue ScriptableObject
+            }
+        }
+
+        Debug.Log("No interactable object found in the interaction zone.");
+        return null;
     }
+
+
+
+    //DEBUG: Make interaction zone visible in Scene view via red rectangle
+    private void DebugDrawRectangle(Vector3 center, Vector2 size, Color color, float duration = 0.1f)
+    {
+        // Calculate the corners of the rectangle
+        Vector3 topLeft = center + new Vector3(-size.x / 2, size.y / 2, 0);
+        Vector3 topRight = center + new Vector3(size.x / 2, size.y / 2, 0);
+        Vector3 bottomLeft = center + new Vector3(-size.x / 2, -size.y / 2, 0);
+        Vector3 bottomRight = center + new Vector3(size.x / 2, -size.y / 2, 0);
+
+        // Draw the edges of the rectangle with a longer duration
+        Debug.DrawLine(topLeft, topRight, color, duration);
+        Debug.DrawLine(topRight, bottomRight, color, duration);
+        Debug.DrawLine(bottomRight, bottomLeft, color, duration);
+        Debug.DrawLine(bottomLeft, topLeft, color, duration);
+    }
+
+    //Interaction zone adjustable in Inspector
+    [SerializeField] private Vector2 interactionZoneSize = new Vector2(1f, 0.5f); // Width and Height
+    [SerializeField] private float interactionOffset = 0.5f; // Distance from the player's center
+
 
     void Update()
     {
@@ -164,17 +237,19 @@ public class PlayerController : MonoBehaviour
         // Perform actions depending on player state
         if (CurrentState == PlayerState.Default)
         {
-            if (PlayerInputManager.WasDialgouePressed)
+            if (PlayerInputManager.WasDialoguePressed)
             {
-                // Check for collision with DialogueLayer
                 Dialogue dialogue = checkForDialogueCollision();
-                Debug.Log(dialogue);
                 if (dialogue != null)
                 {
                     CurrentState = PlayerState.Dialogue;
                     CustomEvents.OnDialogueStart?.Invoke(dialogue);
+
+                    // Pass facing direction to the DialogueManager
+                    DialogueManager.StartDialogue(dialogue, FacingDirection);
                 }
             }
+    
 
             movement = PlayerInputManager.Movement;
             // If moving, set FacingDirection
@@ -212,7 +287,7 @@ public class PlayerController : MonoBehaviour
         }
         else if (CurrentState == PlayerState.Dialogue)
         {
-            if (PlayerInputManager.WasDialgouePressed)
+            if (PlayerInputManager.WasDialoguePressed)
             {
                 DialogueManager.AdvanceCurrentDialogue();
             }
@@ -225,4 +300,5 @@ public class PlayerController : MonoBehaviour
         // is independent of framerate
         playerMovement.Move(movement);
     }
+
 }
