@@ -13,7 +13,7 @@ TagManager:
   - UI
   - Enemy
   - Dialogue
-  - 
+  - Dialogueable
   - 
   - 
   - 
@@ -38,6 +38,9 @@ TagManager:
   - 
   - 
   m_SortingLayers:
+  - name: Background
+    uniqueID: 1633684679
+    locked: 0
   - name: Default
     uniqueID: 0
     locked: 0

@@ -49,7 +49,7 @@ public class PlayerInputManager : MonoBehaviour
     public bool MenuClosed { get; private set; }
     public static bool WasToggleInstrumentPressed;
     public static string NotePressed;
-    public static bool WasDialgouePressed;
+    public static bool WasDialoguePressed;
 
     // Input Action Map
     private InputActionMap currentActionMap;
@@ -243,7 +243,7 @@ public class PlayerInputManager : MonoBehaviour
         }
         WasToggleInstrumentPressed = toggleInstrumentAction.WasPressedThisFrame();
         HandleNotePress();
-        WasDialgouePressed = dialogueAction.WasPressedThisFrame();
+        WasDialoguePressed = dialogueAction.WasPressedThisFrame();
     }
 }
 
