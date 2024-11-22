@@ -8,7 +8,7 @@ using UnityEngine.AI;
 public class MenuManager : MonoBehaviour
 {
     public static MenuManager Instance;
-    public GameObject PauseMenuUI;
+    public GameObject MenuUI;
     public ButtonSelectionHandler[] buttons { get; private set; }
     private Dictionary<GameObject, (Vector3 _startPos, Vector3 _startScale)> buttonStates;
     // public bool isPaused {get; private set;}
@@ -20,9 +20,10 @@ public class MenuManager : MonoBehaviour
             Instance = this;
             // DontDestroyOnLoad(gameObject);  // Optional: persists across scenes
         }
-        else
+        else if (Instance != this)
         {
             Destroy(gameObject);  // Destroy duplicate instances
+            return;
         }
     }
     private void Start()
