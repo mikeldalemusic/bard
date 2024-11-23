@@ -40,7 +40,7 @@ MonoBehaviour:
   MaxFootstepPitchVariation: 0.1
   MaxFootstepVolumeVariation: 0.1
   NoteA:
-    Clip: {fileID: 8300000, guid: b7255dca189b046659a736095422c08c, type: 3}
+    Clip: {fileID: 8300000, guid: d14355211ffcf4ba4a9fdd7aaa67c624, type: 3}
     DefaultPitch: 1
     DefaultVolume: 1
     ShouldLoop: 0
@@ -50,7 +50,7 @@ MonoBehaviour:
     DefaultVolume: 1
     ShouldLoop: 0
   NoteC:
-    Clip: {fileID: 8300000, guid: d14355211ffcf4ba4a9fdd7aaa67c624, type: 3}
+    Clip: {fileID: 0}
     DefaultPitch: 1
     DefaultVolume: 1
     ShouldLoop: 0
@@ -60,32 +60,40 @@ MonoBehaviour:
     DefaultVolume: 1
     ShouldLoop: 0
   NoteF:
-    Clip: {fileID: 8300000, guid: 31edd86e966ca4c8a8bfeaa454adcb29, type: 3}
+    Clip: {fileID: 8300000, guid: e6b8b24048a43284eb39e74b8d22691a, type: 3}
     DefaultPitch: 1
     DefaultVolume: 1
     ShouldLoop: 0
   Melody1:
-    Clip: {fileID: 8300000, guid: dca97a2d2ad454874b6274df9837dea3, type: 3}
+    Clip: {fileID: 8300000, guid: e6b8b24048a43284eb39e74b8d22691a, type: 3}
     DefaultPitch: 1
     DefaultVolume: 1
     ShouldLoop: 0
   Melody2:
-    Clip: {fileID: 8300000, guid: 8182e29db9e0245d38f5858b24af3bf9, type: 3}
+    Clip: {fileID: 0}
     DefaultPitch: 1
     DefaultVolume: 1
     ShouldLoop: 0
-  TimeBeforeMelody: 0.5
+  TimeBeforeMelody: 0
   MelodyCooldownTime: 3
   AttackChords:
-  - Clip: {fileID: 8300000, guid: 5589bd3279e314227ba99d092fa27eb7, type: 3}
+  - Clip: {fileID: 8300000, guid: 1e275852bd27f304aa88913d1aac9958, type: 3}
     DefaultPitch: 1
-    DefaultVolume: 1
+    DefaultVolume: 0.5
     ShouldLoop: 0
-  - Clip: {fileID: 8300000, guid: 63e8383e6ff814e29b6be87163714482, type: 3}
+  - Clip: {fileID: 8300000, guid: b039c6177d82a6247bd90e72d07f1da0, type: 3}
     DefaultPitch: 1
-    DefaultVolume: 1
+    DefaultVolume: 0.5
     ShouldLoop: 0
-  - Clip: {fileID: 8300000, guid: 92a86b677046a43baa5f3824480d92e8, type: 3}
+  - Clip: {fileID: 8300000, guid: 4f18bb8a4fd8f0548bdb311c460c379f, type: 3}
     DefaultPitch: 1
-    DefaultVolume: 1
+    DefaultVolume: 0.5
+    ShouldLoop: 0
+  - Clip: {fileID: 8300000, guid: 397adde8098213247bf7371e10580d1b, type: 3}
+    DefaultPitch: 1
+    DefaultVolume: 0.5
+    ShouldLoop: 0
+  - Clip: {fileID: 8300000, guid: fc0effdf5015fcd42b2313495c7005f9, type: 3}
+    DefaultPitch: 1
+    DefaultVolume: 0.5
     ShouldLoop: 0
